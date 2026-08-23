@@ -49,4 +49,5 @@ export ASK_CREDENTIALS_DIR="/data/.ask"
 ## Run your program
 # The upstream application stores the current stream in memory, so it must run
 # as a single worker to keep push and playback requests consistent.
-exec /app/venv/bin/gunicorn --workers 1 app:app --chdir /app/src --bind "0.0.0.0:${PORT}"
+exec /app/venv/bin/gunicorn --workers 1 --worker-class gthread --threads 8 --timeout 120 app:app --chdir /app/src --bind "0.0.0.0:${PORT}"
+
